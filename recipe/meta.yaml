@@ -12,16 +12,16 @@ source:
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install ./text -vv
-  number: 0
+  number: 1
   script_env:
    - RELEASE=1
 
 requirements:
   host:
-    - python >=3.7,<3.10
+    - python {{ python_min }}
     - pip
   run:
-    - python >=3.7,<3.10
+    - python >={{ python_min }},<3.10
     - autogluon.multimodal =={{ version }}
 
 test:
@@ -31,6 +31,7 @@ test:
     - python -c "from autogluon.text import __version__ as v; assert v == '{{ version }}', f'{v} != {{ version }}'"
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://pypi.org/project/autogluon.text
